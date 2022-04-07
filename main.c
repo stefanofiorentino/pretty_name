@@ -1,9 +1,9 @@
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
 #define BUF_MAX_LEN (256)
-static const char *prettyName =
-    "PRETTY_NAME=\"QUOTE_STRING IN FILE LINE\"";
+static const char *prettyName = "PRETTY_NAME=\"QUOTE_STRING IN FILE LINE\"";
 
 void getFirstQuotedString(char const *current_line, char *buf, size_t bufLen) {
   char line[BUF_MAX_LEN];
@@ -26,5 +26,7 @@ void getFirstQuotedString(char const *current_line, char *buf, size_t bufLen) {
 int main(int, char **) {
   char buf[BUF_MAX_LEN];
   getFirstQuotedString(prettyName, buf, BUF_MAX_LEN);
-  fprintf(stdout, "%d: %s\n", strlen(buf), buf);
+  assert(strncmp(buf, "QUOTE_STRING IN FILE LINE",
+                 strlen("QUOTE_STRING IN FILE LINE")) == 0 &&
+         "Expected string is missing");
 }
